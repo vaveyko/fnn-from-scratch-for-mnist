@@ -20,15 +20,13 @@ def _len_between_points(f_p: Tuple[int,int], s_p: Tuple[int, int]) -> float:
 
 class ColorGridCanvas(tk.Tk):
 
-    def __init__(self, n:int=50, cell:int=5, color:str="red", brush_size:int=1) -> None:
+    def __init__(self, n: int=50, cell: int=5, color: str="red", brush_size:int=5) -> None:
         super().__init__()
         self.title(f"Предсказание цифр")
         self.n = n
         self.cell = cell
         self.color = color
-
-        self.canvas: tk.Canvas = tk.Canvas(self, width=n*cell, height=n*cell)
-        self.canvas.pack()
+        self.brush_size = brush_size
         self.rects: List[List[int]] = [[0 for _ in range(n)] for _ in range(n)]
 
         self._create_canvas(n, cell)
@@ -61,11 +59,6 @@ class ColorGridCanvas(tk.Tk):
     def _clear_canvas(self, event) -> None:
         self.canvas.itemconfig("rect", fill=cf.BASE_COLOR)
 
-    def _on_click_hover(self, event) -> None:
-        col = event.x // self.cell
-        row = event.y // self.cell
-        self._draw_circle(col, row, 5)
-
     def _draw_circle(self, x: int, y: int, radius: int) -> None:
         for row in range(y - radius, y + radius + 1):
             for col in range(x - radius, x + radius + 1):
@@ -84,6 +77,11 @@ class ColorGridCanvas(tk.Tk):
 
                     self.canvas.itemconfig(rect, fill=color_str)
 
+    """ EVENT HANDLERS """
+    def _on_left_click(self, event) -> None:
+        col = event.x // self.cell
+        row = event.y // self.cell
+        self._draw_circle(col, row, self.brush_size)
 
 if __name__ == "__main__":
     app = ColorGridCanvas()

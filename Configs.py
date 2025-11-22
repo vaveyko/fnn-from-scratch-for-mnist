@@ -1,0 +1,2 @@
+COLOR_MAX = 65535
+BASE_COLOR = "white"

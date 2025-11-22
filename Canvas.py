@@ -28,11 +28,23 @@ class ColorGridCanvas(tk.Tk):
         self.color = color
         self.brush_size = brush_size
         self.rects: List[List[int]] = [[0 for _ in range(n)] for _ in range(n)]
+        self.labels: List[tk.Label] = []
 
         self._create_canvas(n, cell)
         self._create_grid()
-        self.canvas.bind("<B1-Motion>", self._on_click_hover)
-        self.canvas.bind("<Button-1>", self._on_click_hover)
+        self._create_labels()
+
+    def _create_labels(self):
+        for i in range(10):
+            lbl = tk.Label(self, text=str(i))
+            lbl.grid(row=1, column=i, padx=5)
+            self.labels.append(lbl)
+
+        for i in range(10):
+            lbl = tk.Label(self, text="0%")
+            lbl.grid(row=2, column=i, padx=5, pady=5)
+            self.labels.append(lbl)
+
     def _create_canvas(self, n: int, cell: int) -> None:
         frame = tk.Frame(self, padx=20, pady=20)
         frame.grid(row=0, column=0, columnspan=10)
@@ -82,6 +94,11 @@ class ColorGridCanvas(tk.Tk):
         col = event.x // self.cell
         row = event.y // self.cell
         self._draw_circle(col, row, self.brush_size)
+
+    # implement updating of information in labels
+    def _on_left_release(self, event) -> None:
+        ...
+
 
 if __name__ == "__main__":
     app = ColorGridCanvas()

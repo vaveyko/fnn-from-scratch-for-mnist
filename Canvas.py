@@ -31,9 +31,18 @@ class ColorGridCanvas(tk.Tk):
         self.canvas.pack()
         self.rects: List[List[int]] = [[0 for _ in range(n)] for _ in range(n)]
 
+        self._create_canvas(n, cell)
         self._create_grid()
         self.canvas.bind("<B1-Motion>", self._on_click_hover)
         self.canvas.bind("<Button-1>", self._on_click_hover)
+    def _create_canvas(self, n: int, cell: int) -> None:
+        frame = tk.Frame(self, padx=20, pady=20)
+        frame.grid(row=0, column=0, columnspan=10)
+        self.canvas: tk.Canvas = tk.Canvas(frame, width=n*cell+1, height=n*cell+1)
+        self.canvas.pack()
+
+        self.canvas.bind("<B1-Motion>", self._on_left_click)
+        self.canvas.bind("<Button-1>", self._on_left_click)
         self.canvas.bind("<Button-3>", self._clear_canvas)
 
     def _create_grid(self) -> None:

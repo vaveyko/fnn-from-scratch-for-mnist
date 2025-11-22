@@ -39,8 +39,8 @@ class ColorGridCanvas(tk.Tk):
     def _create_grid(self) -> None:
         for i in range(self.n):
             for j in range(self.n):
-                x0 = j * self.cell
-                y0 = i * self.cell
+                x0 = j * self.cell + 2
+                y0 = i * self.cell + 2
                 x1 = x0 + self.cell
                 y1 = y0 + self.cell
                 rect = self.canvas.create_rectangle(x0, y0, x1, y1,

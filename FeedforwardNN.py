@@ -1,14 +1,20 @@
 import numpy as np
+from typing import List
 
 def sigmoid(x: np.ndarray[int]) -> np.ndarray:
     return 1/(1 + np.exp(-x))
 
 class FeedforwardNN:
-    def __init__(self):
-        pass
+    def __init__(self, layers_size: List[int,]):
+        self.weights: List[np.ndarray, ] = []
+        self._init_weights(layers_size)
 
     def fit(self):
         pass
 
     def predict(self):
         pass
+
+    def _init_weights(self, layers_size: List[int,]) -> None:
+        for i in range(1, len(layers_size)):
+            self.weights.append(np.ndarray(shape=(layers_size[i], layers_size[i-1])))

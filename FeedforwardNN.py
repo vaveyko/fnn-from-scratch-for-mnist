@@ -1,7 +1,7 @@
 import numpy as np
 from typing import List, Callable
 
-def sigmoid(x: np.ndarray[int]) -> np.ndarray:
+def sigmoid(x: np.ndarray[int,]) -> np.ndarray:
     return 1/(1 + np.exp(-x))
 
 class FeedforwardNN:
